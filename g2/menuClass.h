@@ -99,7 +99,7 @@ public:
 					NULL, settingGGame::Surface, &mr);
 			}
 		};
-	}
+	} 
 
 	void increaseStepCount() {
 		this->stepCount++;
