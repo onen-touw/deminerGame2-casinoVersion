@@ -1,5 +1,5 @@
 #pragma once
-//#include"settings.h"
+
 #include"imagesClass.h"
 #include"fieldClass.h"
 
@@ -9,13 +9,10 @@ private:
 	unsigned i = 0;
 	unsigned j = 0;
 	unsigned healthPoint = 0;
-	bool alive = true;
-
 public:
 
 	Character(){ 
-		this->healthPoint = settingGGame::charctData.healthPoint;
-	
+		this->healthPoint = settingGGame::charctData.healthPoint;	
 	}
 	~Character()
 	{
@@ -32,7 +29,6 @@ public:
 		this->healthPoint--;
 		if (this->healthPoint == 0)
 		{
-			alive = false;
 			return false;
 		}
 		return true;
@@ -103,9 +99,16 @@ public:
 				return true;
 			}
 		}
-
 		return false;
 
+	}
+
+	bool checkWin(std::vector<std::vector<cellValue>> field) {
+		if (i == field.size()-1 && j == field[0].size()-1)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	bool checkWalls(direction_ direct, std::vector<std::vector<cellValue>> field) {
@@ -138,7 +141,7 @@ public:
 		return false;
 	}
 
-	bool checking(std::vector<std::vector<cellValue>> field) {
+	bool checkBobm(std::vector<std::vector<cellValue>> field) {
 		if (field[i][j].bomb)
 		{
 			return true;

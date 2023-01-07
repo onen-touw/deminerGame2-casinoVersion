@@ -108,6 +108,9 @@ enum hardnesSettingsEnum
 struct menuSettings
 {
 	int menuPaddingTop = 30;
+	SDL_Rect menuOpenBtnCoords = {30, menuPaddingTop, 40, 40 };
+	int cropHeightImgBtn = 150;
+	int widthImgBtns = 300;
 	enum menuImg
 	{
 		hearts,
@@ -122,9 +125,20 @@ struct menuSettings
 	};
 	enum menuPuncts
 	{
+		settingsBtn,
+		about,
+		quitBtn,
+		cancelBtn,
 
+		menuPunctsTOTAL
+	};
+	enum menuSettingPuncts
+	{
+		easySetting = 0,
+		normalSetting,
+		hardSetting,
 
-		menuTOTAL
+		menuSettingPunctsTOTAL
 	};
 };
 
@@ -135,4 +149,5 @@ namespace settingGGame {
 	extern hardnesSettings hardSetting;
 	extern CharacterValues charctData;
 	extern menuSettings menuSetting;
+	//extern std::string path
 }

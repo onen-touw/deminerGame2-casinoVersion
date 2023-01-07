@@ -52,12 +52,35 @@ int main(int argc, char* argv[]) {
 	direction_ direct;
 	bool game = true;
 	bool firstStep = false;
+	
+	int cursor_X = 0, cursor_Y = 0;
+
 
 	while (game) {
 
-		while (SDL_PollEvent(&event))
+		while (SDL_PollEvent(&event) || game)
 		{
+			menu.gTimer();
+			menu.blitGTime();
+
+			if (event.button.button == SDL_BUTTON_LEFT && event.type == SDL_MOUSEBUTTONUP)
+			{
+				SDL_GetMouseState(&cursor_X, &cursor_Y);
+				if (menu.checkOpenBtn(cursor_X, cursor_Y) && !menu.getMenuFlag())
+				{
+					std::cout << "menuOPen\n";
+					menu.blitWinMenu(false);
+					menu.toggleMEnuFlag();
+				}
+
+				if (menu.getMenuFlag())
+				{
+
+				}
+			}
+
 			
+
 			if (event.type == SDL_QUIT)//отслеживание закрытия окна через кнопку "Крест"
 			{
 				game = false;
@@ -66,9 +89,6 @@ int main(int argc, char* argv[]) {
 			{
 				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN)
 				{
-
-					
-
 					fTest.setOpenCell(characterTest.getCharacterPosition());
 					if (!characterTest.transmit({ false, true, false, false }, fTest.getFiledVector()))
 					{
@@ -78,7 +98,7 @@ int main(int argc, char* argv[]) {
 
 							menu.increaseStepCount();
 							menu.blitStepCounter();
-							//SDL_UpdateWindowSurface(settingGGame::win);
+							menu.setGTime();
 							firstStep = true;
 						}
 						menu.increaseStepCount();
@@ -89,7 +109,7 @@ int main(int argc, char* argv[]) {
 
 						menu.blitStepCounter();
 
-						if (characterTest.checking(fTest.getFiledVector()))
+						if (characterTest.checkBobm(fTest.getFiledVector()))
 						{
 							std::cout << "bomb\n";
 							fTest.demineBomb(characterTest.getCharacterPosition());
@@ -100,6 +120,10 @@ int main(int argc, char* argv[]) {
 							else std::cout << "you are Loser\n";
 							menu.blitHP(characterTest.getHP());
 							SDL_UpdateWindowSurface(settingGGame::win);
+						}
+						if (characterTest.checkWin(fTest.getFiledVector()))
+						{
+							std::cout << "WIN WIN WIN WIN WIN\n";
 						}
 					}
 				}
@@ -115,7 +139,7 @@ int main(int argc, char* argv[]) {
 
 							menu.increaseStepCount();
 							menu.blitStepCounter();
-							//SDL_UpdateWindowSurface(settingGGame::win);
+							menu.setGTime();
 							firstStep = true;
 						}
 						menu.increaseStepCount();
@@ -126,7 +150,7 @@ int main(int argc, char* argv[]) {
 
 						menu.blitStepCounter();
 
-						if (characterTest.checking(fTest.getFiledVector()))
+						if (characterTest.checkBobm(fTest.getFiledVector()))
 						{
 							std::cout << "bomb\n";
 							fTest.demineBomb(characterTest.getCharacterPosition());
@@ -137,6 +161,10 @@ int main(int argc, char* argv[]) {
 							else std::cout << "you are Loser\n";
 							menu.blitHP(characterTest.getHP());
 							SDL_UpdateWindowSurface(settingGGame::win);
+						}
+						if (characterTest.checkWin(fTest.getFiledVector()))
+						{
+							std::cout << "WIN WIN WIN WIN WIN\n";
 						}
 					}
 
@@ -154,7 +182,7 @@ int main(int argc, char* argv[]) {
 
 							menu.increaseStepCount();
 							menu.blitStepCounter();
-							//SDL_UpdateWindowSurface(settingGGame::win);
+							menu.setGTime();
 							firstStep = true;
 						}
 						menu.increaseStepCount();
@@ -165,7 +193,7 @@ int main(int argc, char* argv[]) {
 
 						menu.blitStepCounter();
 
-						if (characterTest.checking(fTest.getFiledVector()))
+						if (characterTest.checkBobm(fTest.getFiledVector()))
 						{
 							std::cout << "bomb\n";
 							fTest.demineBomb(characterTest.getCharacterPosition());
@@ -175,6 +203,10 @@ int main(int argc, char* argv[]) {
 							else std::cout << "you are Loser\n";
 							menu.blitHP(characterTest.getHP());
 							SDL_UpdateWindowSurface(settingGGame::win);
+						}
+						if (characterTest.checkWin(fTest.getFiledVector()))
+						{
+							std::cout << "WIN WIN WIN WIN WIN\n";
 						}
 					}
 				}
@@ -191,7 +223,7 @@ int main(int argc, char* argv[]) {
 
 							menu.increaseStepCount();
 							menu.blitStepCounter();
-							//SDL_UpdateWindowSurface(settingGGame::win);
+							menu.setGTime();
 							firstStep = true;
 						}
 						menu.increaseStepCount();
@@ -203,7 +235,7 @@ int main(int argc, char* argv[]) {
 
 						menu.blitStepCounter();
 
-						if (characterTest.checking(fTest.getFiledVector()))
+						if (characterTest.checkBobm(fTest.getFiledVector()))
 						{
 							std::cout << "bomb\n";
 							fTest.demineBomb(characterTest.getCharacterPosition());
@@ -214,6 +246,10 @@ int main(int argc, char* argv[]) {
 							else std::cout << "you are Loser\n";
 							menu.blitHP(characterTest.getHP());
 							SDL_UpdateWindowSurface(settingGGame::win);
+						}
+						if (characterTest.checkWin(fTest.getFiledVector()))
+						{
+							std::cout << "WIN WIN WIN WIN WIN\n";
 						}
 					}
 				}

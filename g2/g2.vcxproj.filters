@@ -85,9 +85,6 @@
     <Image Include="images\menuImges\AcBtn.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="images\menuImges\mainBTNS.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
     <Image Include="images\menuImges\numbers_red.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>

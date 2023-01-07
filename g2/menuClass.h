@@ -19,7 +19,33 @@ private:
 	unsigned stepCount = 0;
 	std::string stepSCount = "000";
 	std::string stepSTemp;
+
+	std::vector<SDL_Rect> menuBtnCoords;
+
 public:
+	menuClass() {
+		menuBtnCoords.resize(settingGGame::menuSetting.menuPuncts::menuPunctsTOTAL);
+		SDL_Rect cr, mr;
+		for (int i = 0; i < menuBtnCoords.size(); i++)
+		{
+			cr = {0, settingGGame::menuSetting.cropHeightImgBtn * i, 0, settingGGame::menuSetting.widthImgBtns};
+			mr = {};
+		}
+	}
+	~menuClass()
+	{
+		menuBtnCoords.clear();
+	}
+
+	bool getMenuFlag() { return menuFlag; }
+
+	void toggleMEnuFlag() {
+		if (menuFlag)
+		{
+			menuFlag = false;
+		}
+		else menuFlag = true;
+	}
 
 	///start timer point
 	void setGTime() {
@@ -57,7 +83,6 @@ public:
 			{
 				gTime = timeTemp;
 			}
-
 		}
 
 		//оптимизация отрисовки
@@ -76,25 +101,36 @@ public:
 
 	}
 
+	bool checkOpenBtn(int x, int y) {
+		if (x >= settingGGame::menuSetting.menuOpenBtnCoords.x &&
+			x <= settingGGame::menuSetting.menuOpenBtnCoords.x + settingGGame::menuSetting.menuOpenBtnCoords.w &&
+			y >= settingGGame::menuSetting.menuOpenBtnCoords.y &&
+			y <= settingGGame::menuSetting.menuOpenBtnCoords.y + settingGGame::menuSetting.menuOpenBtnCoords.h)
+		{
+			return true;
+		}
+		else return false;
+	}
 
 	void blitHeader() {
 		SDL_Rect mr = { 0, 0, settingGGame::gSizes.winWIDTH, settingGGame::gSizes.menuHeaderHeight };
 		SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::headerAndBG],
 			NULL, settingGGame::Surface, &mr);
-		mr = { settingGGame::gSizes.winWIDTH - 100, settingGGame::menuSetting.menuPaddingTop, 40, 40 };
+
+		mr = settingGGame::menuSetting.menuOpenBtnCoords;
 		SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::menuOpenBtn],
 			NULL, settingGGame::Surface, &mr);
 	}
 
 	void blitHP(unsigned countHP) {
-		SDL_Rect mr = { 30, settingGGame::menuSetting.menuPaddingTop, 40 * settingGGame::charctData.healthPoint , 40 };
+		SDL_Rect mr = { settingGGame::gSizes.winWIDTH - 100, settingGGame::menuSetting.menuPaddingTop, 40 * settingGGame::charctData.healthPoint , 40 };
 		SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::headerAndBG],
 			NULL, settingGGame::Surface, &mr);
 		if (countHP > 0)
 		{
 			for (int i = 0; i < countHP; i++)
 			{
-				mr = { 30 + i * 40,settingGGame::menuSetting.menuPaddingTop, 40 , 40 };
+				mr = { settingGGame::gSizes.winWIDTH - 100 + i * 40,settingGGame::menuSetting.menuPaddingTop, 40 , 40 };
 				SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::hearts],
 					NULL, settingGGame::Surface, &mr);
 			}
@@ -133,9 +169,6 @@ public:
 		
 	}
 
-	
-	
-
 	void blitMenuHeaderFunctional() {
 		blitHeader();
 		blitHP(settingGGame::charctData.healthPoint);
@@ -150,12 +183,16 @@ public:
 		std::cout << v << " vvv\n";
 		if (v == 0 && !update)
 		{
-			menuFlag = true;
-			SDL_Rect mr = {};
+			SDL_Rect mr = { settingGGame::gSizes.winWIDTH / 2 - settingGGame::gSizes.winWIDTH / 4,
+				settingGGame::menuSetting.menuPaddingTop + settingGGame::gSizes.menuHeaderHeight,
+				settingGGame::gSizes.winWIDTH / 2,
+				settingGGame::gSizes.winHEIGHT - settingGGame::gSizes.menuHeaderHeight -2* settingGGame::menuSetting.menuPaddingTop
+			};
 			SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::headerAndBG],
 				NULL, settingGGame::Surface, &mr);
 			SDL_UpdateWindowSurface(settingGGame::win);
 			v++;
+
 		}
 		else if (v > 0 && !update)
 		{

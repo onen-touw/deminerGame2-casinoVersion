@@ -158,7 +158,6 @@
     <Image Include="images\gameImages\strangeTip.png" />
     <Image Include="images\gameImages\wight.png" />
     <Image Include="images\menuImges\AcBtn.png" />
-    <Image Include="images\menuImges\mainBTNS.png" />
     <Image Include="images\menuImges\numbers_red.png" />
     <Image Include="images\menuImges\pinkMenuBG.png" />
     <Image Include="images\menuImges\rBt.png" />

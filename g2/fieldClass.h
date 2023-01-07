@@ -1,7 +1,7 @@
 #pragma once
 #include"settings.h"
 #include "imagesClass.h"
-//using namespace ;
+
 
 class fieldClass :
     public imagesClass/*, public baseGameClass*/
@@ -94,6 +94,8 @@ public:
 
 
     }
+
+    
 
     void randomGenerationBombsTips() {
         int h = this->heightF;
