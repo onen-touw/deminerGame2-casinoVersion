@@ -19,11 +19,11 @@ enum gameImages
 struct hardnesSettings
 {
 
-	int hardSizeHeight = 30;
-	int hardSizeWidth = 40;
+	int hardSizeHeight = 18;
+	int hardSizeWidth = 25;
 
-	int normalSizeHeight = 20;
-	int normalSizeWidth = 25;
+	int normalSizeHeight = 16;
+	int normalSizeWidth = 20;
 
 	int easySizeHeight = 10;
 	int easySizeWigth = 15;
@@ -108,6 +108,11 @@ enum hardnesSettingsEnum
 struct menuSettings
 {
 	int menuPaddingTop = 30;
+	SDL_Rect menuOpenBtnCoords = {30, menuPaddingTop, 40, 40 };
+	int cropHeightImgBtn = 150;
+	int heightImgBtn = 95;
+	int widthImgBtns = 300;
+	const int menu2LvlPunctsCount = 2; ///about, settings
 	enum menuImg
 	{
 		hearts,
@@ -115,16 +120,41 @@ struct menuSettings
 		headerAndBG,
 		menuOpenBtn,
 		menuFirstLvlBtns,
+		menuSettingsBtns,
 		redSwitch,
 		yellowSwitch,
+		rootBtn,
 
 		imgMenuTOTAL
 	};
+	enum menu2lvlPuncts
+	{
+		goTo1lvl,
+		settingsP,
+		aboutP
+	};
+	enum rootBtn
+	{
+		accept,
+		cancel,
+		rootTOTAL
+	};
 	enum menuPuncts
 	{
+		settingsBtn,
+		about,
+		quitBtn,
+		cancelBtn,
 
+		menuPunctsTOTAL
+	};
+	enum menuSettingPuncts
+	{
+		easySetting = 0,
+		normalSetting,
+		hardSetting,
 
-		menuTOTAL
+		menuSettingPunctsTOTAL
 	};
 };
 
@@ -135,4 +165,6 @@ namespace settingGGame {
 	extern hardnesSettings hardSetting;
 	extern CharacterValues charctData;
 	extern menuSettings menuSetting;
+	extern int hardnes;
+	//extern std::string path
 }

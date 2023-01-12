@@ -36,6 +36,9 @@
     <ClCompile Include="menuClass.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="gameplayClass.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -54,6 +57,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="menuClass.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplayClass.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -85,9 +91,6 @@
     <Image Include="images\menuImges\AcBtn.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="images\menuImges\mainBTNS.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
     <Image Include="images\menuImges\numbers_red.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
@@ -97,10 +100,13 @@
     <Image Include="images\menuImges\rBt.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="images\menuImges\settBt.png">
+    <Image Include="images\menuImges\yBt.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="images\menuImges\yBt.png">
+    <Image Include="images\menuImges\menuBtns.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\menuImges\settingBtns.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>

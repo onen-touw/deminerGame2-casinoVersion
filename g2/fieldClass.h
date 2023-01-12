@@ -1,7 +1,7 @@
 #pragma once
 #include"settings.h"
 #include "imagesClass.h"
-//using namespace ;
+
 
 class fieldClass :
     public imagesClass/*, public baseGameClass*/
@@ -64,9 +64,11 @@ public:
     void setOpenCell(Coords pos) {
         this->fieldV[pos.i][pos.j].open = true;
     }
-
-    void setGameSettings(int i) {
-        switch (i)
+    void clearField() {
+        fieldV.clear();
+    }
+    void setGameSettings(/*int i*/) {
+        switch (settingGGame::hardnes)
         {
 
         case hardnesSettingsEnum::easy:
@@ -94,6 +96,8 @@ public:
 
 
     }
+
+    
 
     void randomGenerationBombsTips() {
         int h = this->heightF;

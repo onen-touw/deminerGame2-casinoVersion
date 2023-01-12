@@ -7,4 +7,5 @@ namespace settingGGame {
 	hardnesSettings hardSetting;
 	CharacterValues charctData;
 	menuSettings menuSetting;
+	int hardnes = hardnesSettingsEnum::easy;
 }

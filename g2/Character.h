@@ -1,5 +1,5 @@
 #pragma once
-//#include"settings.h"
+
 #include"imagesClass.h"
 #include"fieldClass.h"
 
@@ -9,17 +9,21 @@ private:
 	unsigned i = 0;
 	unsigned j = 0;
 	unsigned healthPoint = 0;
-	bool alive = true;
-
 public:
 
 	Character(){ 
-		this->healthPoint = settingGGame::charctData.healthPoint;
-	
+		this->setHP();
 	}
 	~Character()
 	{
 	
+	}
+
+	
+
+	void setHP() {
+		this->healthPoint = settingGGame::charctData.healthPoint;
+
 	}
 
 	void setPosition(unsigned i, unsigned j) {
@@ -32,7 +36,6 @@ public:
 		this->healthPoint--;
 		if (this->healthPoint == 0)
 		{
-			alive = false;
 			return false;
 		}
 		return true;
@@ -47,7 +50,10 @@ public:
 
 	unsigned getHP() { return this->healthPoint; }
 
-
+	void characterResetPositon() {
+		this->i = 0;
+		this->j = 0;
+	}
 	void blitCharacter(std::vector<std::vector<cellValue>> field) {
 		SDL_Rect mR = {field[this->i][this->j].x, field[this->i][this->j].y, settingGGame::gSizes.cellSize,settingGGame::gSizes.cellSize };
 		SDL_BlitScaled(images[settingGGame::charctData.img::character], NULL, settingGGame::Surface, &mR);
@@ -103,9 +109,16 @@ public:
 				return true;
 			}
 		}
-
 		return false;
 
+	}
+
+	bool checkWin(std::vector<std::vector<cellValue>> field) {
+		if (i == field.size()-1 && j == field[0].size()-1)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	bool checkWalls(direction_ direct, std::vector<std::vector<cellValue>> field) {
@@ -138,7 +151,7 @@ public:
 		return false;
 	}
 
-	bool checking(std::vector<std::vector<cellValue>> field) {
+	bool checkBobm(std::vector<std::vector<cellValue>> field) {
 		if (field[i][j].bomb)
 		{
 			return true;
