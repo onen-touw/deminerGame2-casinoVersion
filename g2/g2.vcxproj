@@ -135,6 +135,7 @@
     <ClCompile Include="baseGameClass.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="fieldClass.cpp" />
+    <ClCompile Include="gameplayClass.cpp" />
     <ClCompile Include="imagesClass.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menuClass.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="baseGameClass.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="fieldClass.h" />
+    <ClInclude Include="gameplayClass.h" />
     <ClInclude Include="imagesClass.h" />
     <ClInclude Include="menuClass.h" />
     <ClInclude Include="settings.h" />

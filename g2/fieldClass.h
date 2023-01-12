@@ -65,8 +65,8 @@ public:
         this->fieldV[pos.i][pos.j].open = true;
     }
 
-    void setGameSettings(int i) {
-        switch (i)
+    void setGameSettings(/*int i*/) {
+        switch (settingGGame::hardnes)
         {
 
         case hardnesSettingsEnum::easy:

@@ -43,16 +43,31 @@ public:
 		return success;
 	}
 
-	void rebuildWin(int gameLvl) {
-
-		/*this->gSize.fieldHEIGHT = settingGGame::hardSetting.;
-		this->gSize.fieldWIDTH = ;
-		this->gSize.winHEIGHT = ;
-		this->gSize.winWIDTH = ;*/
+	void rebuildWin() {
 
 		SDL_FreeSurface(settingGGame::Surface);
 		SDL_DestroyWindow(settingGGame::win);
 
+		switch (settingGGame::hardnes)
+		{
+		case hardnesSettingsEnum::easy:
+			settingGGame::gSizes.winWIDTH = settingGGame::hardSetting.easySizeWigth * settingGGame::gSizes.cellSize;
+			settingGGame::gSizes.winHEIGHT = settingGGame::hardSetting.easySizeHeight * settingGGame::gSizes.cellSize;
+			break;
+		case hardnesSettingsEnum::normal:
+			settingGGame::gSizes.winWIDTH = settingGGame::hardSetting.normalSizeWidth * settingGGame::gSizes.cellSize;
+			settingGGame::gSizes.winHEIGHT = settingGGame::hardSetting.normalSizeHeight * settingGGame::gSizes.cellSize;
+			break;
+		case hardnesSettingsEnum::hard:
+			settingGGame::gSizes.winWIDTH = settingGGame::hardSetting.hardSizeWidth * settingGGame::gSizes.cellSize;
+			settingGGame::gSizes.winHEIGHT = settingGGame::hardSetting.hardSizeHeight * settingGGame::gSizes.cellSize;
+			break;
+
+		default:
+			break;
+		}
+		settingGGame::gSizes.winHEIGHT +=settingGGame::gSizes.menuHeaderHeight;
+		std::cout << settingGGame::gSizes.winWIDTH << "x" << settingGGame::gSizes.winHEIGHT << "\n";
 		settingGGame::win = SDL_CreateWindow("DeminerGame", 100, 100,
 			settingGGame::gSizes.winWIDTH, settingGGame::gSizes.winHEIGHT,
 			SDL_WINDOW_SHOWN);

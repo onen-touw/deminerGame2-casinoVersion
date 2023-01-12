@@ -29,7 +29,7 @@ private:
 	std::vector<SDL_Rect> settingSwitchCoords;
 	std::vector<SDL_Rect> rootBtnCoords;
 
-
+	int tempHardnesSetting = settingGGame::hardnes;
 
 public:
 	menuClass() {
@@ -83,6 +83,29 @@ public:
 	std::vector<SDL_Rect>getSettingBtnsCoords() { return this->settingBtnCoords; }
 	std::vector<SDL_Rect>getRootBtnsCoords() { return this->rootBtnCoords; }
 
+	void changeHardnesSetting(int i) {
+		if (i == 0)
+		{
+			this->tempHardnesSetting = settingGGame::hardnes;
+
+		}
+		else
+		{
+			this->tempHardnesSetting = i;
+
+		}
+		std::cout << this->tempHardnesSetting << "\n";
+	}
+
+	void blitRedSwich(int i) {
+		for (int i = 0; i < settingBtnCoords.size(); i++)
+		{
+			SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::yellowSwitch], NULL, settingGGame::Surface, &settingSwitchCoords[i]);
+
+		}
+		SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::redSwitch], NULL, settingGGame::Surface, &settingSwitchCoords[i]);
+	}
+
 	void blitRootBtn(int i) {
 		SDL_Rect cr;
 		 cr = {0,  settingGGame::menuSetting.cropHeightImgBtn * i,
@@ -104,7 +127,7 @@ public:
 	}
 
 	bool getMenuFlag() { return menuFlag; }
-	bool getMenu2Lvl() { return this->menu2Lvl; }
+	int getMenu2Lvl() { return this->menu2Lvl; }
 	void goTo1Lvl() { this->menu2Lvl = settingGGame::menuSetting.menu2lvlPuncts::goTo1lvl; }
 
 	std::vector<SDL_Rect> getMenuBtnCoords() { return this->menuBtnCoords; }
@@ -290,6 +313,11 @@ public:
 		}
 	}
 
+	void setNewHardnessSetting() {
+		settingGGame::hardnes = this->tempHardnesSetting;
+		std::cout << settingGGame::hardnes << " << newGAme\n";
+	}
+
 	void blitWinSettings(bool update) {
 
 		static int v = 0;
@@ -308,10 +336,12 @@ public:
 				SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::menuSettingsBtns],
 				&cr, settingGGame::Surface, &settingBtnCoords[i]);
 
-				SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::yellowSwitch], NULL, settingGGame::Surface, &settingSwitchCoords[i]);
+				//SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::yellowSwitch], NULL, settingGGame::Surface, &settingSwitchCoords[i]);
 			}
-			blitRootBtn(0);
-			blitRootBtn(1);
+
+			this->blitRedSwich(this->tempHardnesSetting);
+			blitRootBtn(settingGGame::menuSetting.rootBtn::accept);
+			blitRootBtn(settingGGame::menuSetting.rootBtn::cancel);
 			std::cout << "settings\n";
 			v++;
 		}
@@ -335,7 +365,7 @@ public:
 			menu2Lvl = settingGGame::menuSetting.menu2lvlPuncts::aboutP;
 
 			blitMenuBG();
-			
+			blitRootBtn(settingGGame::menuSetting.rootBtn::cancel);
 			std::cout << "About\n";
 			v++;
 		}

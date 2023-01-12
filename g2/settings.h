@@ -19,11 +19,11 @@ enum gameImages
 struct hardnesSettings
 {
 
-	int hardSizeHeight = 30;
-	int hardSizeWidth = 40;
+	int hardSizeHeight = 20;
+	int hardSizeWidth = 25;
 
-	int normalSizeHeight = 20;
-	int normalSizeWidth = 25;
+	int normalSizeHeight = 15;
+	int normalSizeWidth = 20;
 
 	int easySizeHeight = 10;
 	int easySizeWigth = 15;
@@ -165,5 +165,6 @@ namespace settingGGame {
 	extern hardnesSettings hardSetting;
 	extern CharacterValues charctData;
 	extern menuSettings menuSetting;
+	extern int hardnes;
 	//extern std::string path
 }
