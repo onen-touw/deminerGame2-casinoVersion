@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
 	menu.loadImg("./images/menuImges/hearts.png", settingGGame::menuSetting.menuImg::hearts);
 	menu.loadImg("./images/menuImges/menuBtns.png", settingGGame::menuSetting.menuImg::menuFirstLvlBtns);
 	menu.loadImg("./images/menuImges/settingBtns.png", settingGGame::menuSetting.menuImg::menuSettingsBtns);
+	menu.loadImg("./images/menuImges/AcBtn.png", settingGGame::menuSetting.menuImg::rootBtn);
 	menu.blitMenuHeaderFunctional();
 	
 
@@ -84,7 +85,7 @@ int main(int argc, char* argv[]) {
 					menu.toggleMEnuFlag();
 				}
 
-				if (menu.getMenuFlag())
+				if (menu.getMenuFlag() && !menu.getMenu2Lvl())
 				{
 					switch (menu.btnParse(cursor_X, cursor_Y, menu.getMenuBtnCoords()))
 					{
@@ -93,20 +94,31 @@ int main(int argc, char* argv[]) {
 						//menu.blitSettings();
 						std::cout << "blitSettings\n";
 
+						
 						SDL_UpdateWindowSurface(settingGGame::win);
 						
 						break;
 					case settingGGame::menuSetting.menuPuncts::about:
+						menu.blitWinAbout(false);
 						//menu.blitAbout();
 						std::cout << "blitAbout\n";
 						break;
 					case settingGGame::menuSetting.menuPuncts::quitBtn:
 						//quit
 						std::cout << "quit\n";
-
+						return 0;
 						break;
 					case settingGGame::menuSetting.menuPuncts::cancelBtn:
 						//closeMenu
+						menu.blitWinMenu(true);
+						menu.blitWinAbout(true);
+						menu.blitWinSettings(true);
+
+						menu.toggleMEnuFlag();
+						fTest.blitField();
+						characterTest.blitCharacter(fTest.getFiledVector());
+
+						SDL_UpdateWindowSurface(settingGGame::win);
 						std::cout << "closeMenu\n";
 
 						break;
@@ -114,6 +126,52 @@ int main(int argc, char* argv[]) {
 					default:
 						break;
 					}
+				}
+
+				else if (menu.getMenuFlag() && menu.getMenu2Lvl())
+				{
+					if (menu.getMenu2Lvl() == settingGGame::menuSetting.menu2lvlPuncts::settingsP)
+					{
+						switch (menu.btnParse(cursor_X, cursor_Y, menu.getSettingBtnsCoords()))
+						{
+						case settingGGame::menuSetting.menuSettingPuncts::easySetting:
+							///
+							break;
+						case settingGGame::menuSetting.menuSettingPuncts::normalSetting:
+							///
+							break;
+						case settingGGame::menuSetting.menuSettingPuncts::hardSetting:
+							///
+							break;
+
+						default:
+							break;
+						}
+
+						switch (menu.btnParse(cursor_X, cursor_Y, menu.getRootBtnsCoords()))
+						{
+						case settingGGame::menuSetting.rootBtn::accept:
+							///
+							break;
+						case settingGGame::menuSetting.rootBtn::cancel:
+							///
+							break;
+
+						default:
+							break;
+						}
+
+
+					}
+
+					else if (menu.getMenu2Lvl() == settingGGame::menuSetting.menu2lvlPuncts::aboutP)
+					{
+						if (menu.btnParse(cursor_X, cursor_Y, ))
+						{
+
+						}
+					}
+
 				}
 			}
 

@@ -5,11 +5,14 @@
 #include<string>
 
 
+
 class menuClass : public imagesClass
 {
 
 private:
 	bool menuFlag = false;
+	int menu2Lvl = 0;
+
 	Uint32 timer = 0;
 	Uint32 timerPoint = 0;
 	std::string gTime = "000";
@@ -24,6 +27,8 @@ private:
 
 	std::vector<SDL_Rect> settingBtnCoords;
 	std::vector<SDL_Rect> settingSwitchCoords;
+	std::vector<SDL_Rect> rootBtnCoords;
+
 
 
 public:
@@ -50,18 +55,41 @@ public:
 				settingGGame::menuSetting.heightImgBtn };
 			settingBtnCoords[i] = mr;
 
-			mr = { settingGGame::gSizes.winWIDTH / 2 - settingGGame::menuSetting.widthImgBtns / 2 - 100,
+			mr = { settingGGame::gSizes.winWIDTH / 2 - settingGGame::menuSetting.widthImgBtns / 2 - 20,
 				(settingGGame::menuSetting.heightImgBtn + 5) * i + settingGGame::menuSetting.menuPaddingTop * 2 + settingGGame::gSizes.menuHeaderHeight,
-				settingGGame::menuSetting.heightImgBtn, settingGGame::menuSetting.heightImgBtn
+				settingGGame::menuSetting.heightImgBtn, 
+				settingGGame::menuSetting.heightImgBtn
 			};
 			settingSwitchCoords[i] = mr;
-
+		}
+		rootBtnCoords.resize(settingGGame::menuSetting.rootTOTAL);
+		for (int i = 0; i < settingGGame::menuSetting.rootTOTAL; i++) {
+			mr = { settingGGame::gSizes.winWIDTH / 2 - settingGGame::menuSetting.widthImgBtns / 2 + settingGGame::menuSetting.widthImgBtns / 2 * i,
+			500,
+			settingGGame::menuSetting.widthImgBtns / 2,
+			settingGGame::menuSetting.heightImgBtn / 2
+			};
+			rootBtnCoords[i] = mr;
 		}
 	}
 	~menuClass()
 	{
 		menuBtnCoords.clear();
 		settingBtnCoords.clear();
+		settingSwitchCoords.clear();
+		rootBtnCoords.clear();
+	}
+
+	std::vector<SDL_Rect>getSettingBtnsCoords() { return this->settingBtnCoords; }
+	std::vector<SDL_Rect>getRootBtnsCoords() { return this->rootBtnCoords; }
+
+	void blitRootBtn(int i) {
+		SDL_Rect cr;
+		 cr = {0,  settingGGame::menuSetting.cropHeightImgBtn * i,
+					settingGGame::menuSetting.widthImgBtns,
+					settingGGame::menuSetting.cropHeightImgBtn 
+		 };
+		 SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::rootBtn], &cr, settingGGame::Surface, &rootBtnCoords[i]);
 	}
 
 	int btnParse(int x, int y, std::vector<SDL_Rect>vect) {
@@ -72,9 +100,12 @@ public:
 				return i;
 			}
 		}
+		return -1;
 	}
 
 	bool getMenuFlag() { return menuFlag; }
+	bool getMenu2Lvl() { return this->menu2Lvl; }
+	void goTo1Lvl() { this->menu2Lvl = settingGGame::menuSetting.menu2lvlPuncts::goTo1lvl; }
 
 	std::vector<SDL_Rect> getMenuBtnCoords() { return this->menuBtnCoords; }
 
@@ -265,6 +296,7 @@ public:
 		std::cout << v << " vvv\n";
 		if (v == 0 && !update)
 		{
+			menu2Lvl = settingGGame::menuSetting.menu2lvlPuncts::settingsP;
 			blitMenuBG();
 
 			for (int i = 0; i < settingBtnCoords.size(); i++)
@@ -276,9 +308,10 @@ public:
 				SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::menuSettingsBtns],
 				&cr, settingGGame::Surface, &settingBtnCoords[i]);
 
-				//SDL_BlitScaled(images[])
+				SDL_BlitScaled(images[settingGGame::menuSetting.menuImg::yellowSwitch], NULL, settingGGame::Surface, &settingSwitchCoords[i]);
 			}
-
+			blitRootBtn(0);
+			blitRootBtn(1);
 			std::cout << "settings\n";
 			v++;
 		}
@@ -299,8 +332,10 @@ public:
 		std::cout << v << " vvv\n";
 		if (v == 0 && !update)
 		{
+			menu2Lvl = settingGGame::menuSetting.menu2lvlPuncts::aboutP;
 
 			blitMenuBG();
+			
 			std::cout << "About\n";
 			v++;
 		}
