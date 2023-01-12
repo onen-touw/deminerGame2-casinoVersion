@@ -64,7 +64,9 @@ public:
     void setOpenCell(Coords pos) {
         this->fieldV[pos.i][pos.j].open = true;
     }
-
+    void clearField() {
+        fieldV.clear();
+    }
     void setGameSettings(/*int i*/) {
         switch (settingGGame::hardnes)
         {

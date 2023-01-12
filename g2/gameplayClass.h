@@ -51,22 +51,28 @@ public:
 
 	}
 
-	void generateGame(/*int hardLvl*/) {
+	void generateGame() {
 		bcTest.rebuildWin();
-		fTest.setGameSettings(/*hardLvl*/);
+		fTest.clearField();
+		fTest.setGameSettings();
 		fTest.generateFieldMatrix();
 		fTest.randomGenerationBombsTips();
 		fTest.debug();
 
+		menu.resetTimerAndCounter();
 		menu.blitMenuHeaderFunctional();
 
 		fTest.blitField();
 
 		characterTest.characterResetPositon();
 		characterTest.blitCharacter(fTest.getFiledVector());
+		characterTest.setHP();
 
 		SDL_UpdateWindowSurface(settingGGame::win);
 
+
+		this->firstStep = false;
+		this->gameResult = false;
 	}
 
 
@@ -222,21 +228,6 @@ public:
 						{
 							switch (menu.btnParse(cursor_X, cursor_Y, menu.getRootBtnsCoords()))
 							{
-							case settingGGame::menuSetting.rootBtn::accept:
-								std::cout << "accept\n";
-								///
-								menu.blitWinAbout(true);
-								menu.blitWinMenu(true);
-								menu.goTo1Lvl();
-								menu.toggleMEnuFlag();
-
-								
-
-								fTest.blitField();
-								characterTest.blitCharacter(fTest.getFiledVector());
-
-								SDL_UpdateWindowSurface(settingGGame::win);
-								break;
 							case settingGGame::menuSetting.rootBtn::cancel:
 								std::cout << "cancel\n";
 								menu.goTo1Lvl();
@@ -261,7 +252,7 @@ public:
 				{
 					game = false;
 				}
-				if (characterTest.getHP())
+				if (characterTest.getHP() && !gameResult)
 				{
 					/// TODO: create common function for btn press
 
@@ -309,6 +300,8 @@ public:
 							{
 								std::cout << "WIN WIN WIN WIN WIN\n";
 								/// TODO: saving if it's necessary for this work(???)
+								gameResult = true;
+
 
 							}
 						}
@@ -356,6 +349,8 @@ public:
 							if (characterTest.checkWin(fTest.getFiledVector()))
 							{
 								std::cout << "WIN WIN WIN WIN WIN\n";
+								gameResult = true;
+
 							}
 						}
 
@@ -402,6 +397,8 @@ public:
 							if (characterTest.checkWin(fTest.getFiledVector()))
 							{
 								std::cout << "WIN WIN WIN WIN WIN\n";
+								gameResult = true;
+
 							}
 						}
 					}
@@ -449,6 +446,8 @@ public:
 							if (characterTest.checkWin(fTest.getFiledVector()))
 							{
 								std::cout << "WIN WIN WIN WIN WIN\n";
+								gameResult = true;
+
 							}
 						}
 					}

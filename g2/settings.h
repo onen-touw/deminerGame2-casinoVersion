@@ -19,10 +19,10 @@ enum gameImages
 struct hardnesSettings
 {
 
-	int hardSizeHeight = 20;
+	int hardSizeHeight = 18;
 	int hardSizeWidth = 25;
 
-	int normalSizeHeight = 15;
+	int normalSizeHeight = 16;
 	int normalSizeWidth = 20;
 
 	int easySizeHeight = 10;

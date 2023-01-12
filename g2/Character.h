@@ -12,14 +12,17 @@ private:
 public:
 
 	Character(){ 
-		this->healthPoint = settingGGame::charctData.healthPoint;	
+		this->setHP();
 	}
 	~Character()
 	{
 	
 	}
 
+	
+
 	void setHP() {
+		this->healthPoint = settingGGame::charctData.healthPoint;
 
 	}
 

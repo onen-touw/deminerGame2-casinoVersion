@@ -233,6 +233,8 @@ int main(int argc, char* argv[]) {
 
 	//		
 
+
+
 	//		if (event.type == SDL_QUIT)//отслеживание закрытия окна через кнопку "Крест"
 	//		{
 	//			game = false;

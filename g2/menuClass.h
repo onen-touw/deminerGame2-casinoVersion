@@ -140,6 +140,13 @@ public:
 		else menuFlag = true;
 	}
 
+	void resetTimerAndCounter() {
+		this->timer = 0;
+		this->stepCount = 0;
+		this-> gTime = "000";
+		this->timerPoint = 0;
+	}
+
 	///start timer point
 	void setGTime() {
 		timerPoint = SDL_GetTicks();
