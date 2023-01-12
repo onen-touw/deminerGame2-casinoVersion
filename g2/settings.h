@@ -110,6 +110,7 @@ struct menuSettings
 	int menuPaddingTop = 30;
 	SDL_Rect menuOpenBtnCoords = {30, menuPaddingTop, 40, 40 };
 	int cropHeightImgBtn = 150;
+	int heightImgBtn = 95;
 	int widthImgBtns = 300;
 	enum menuImg
 	{
@@ -118,6 +119,7 @@ struct menuSettings
 		headerAndBG,
 		menuOpenBtn,
 		menuFirstLvlBtns,
+		menuSettingsBtns,
 		redSwitch,
 		yellowSwitch,
 

@@ -158,10 +158,11 @@
     <Image Include="images\gameImages\strangeTip.png" />
     <Image Include="images\gameImages\wight.png" />
     <Image Include="images\menuImges\AcBtn.png" />
+    <Image Include="images\menuImges\menuBtns.png" />
     <Image Include="images\menuImges\numbers_red.png" />
     <Image Include="images\menuImges\pinkMenuBG.png" />
     <Image Include="images\menuImges\rBt.png" />
-    <Image Include="images\menuImges\settBt.png" />
+    <Image Include="images\menuImges\settingBtns.png" />
     <Image Include="images\menuImges\yBt.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

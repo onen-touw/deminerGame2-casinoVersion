@@ -33,6 +33,8 @@ int main(int argc, char* argv[]) {
 	menu.loadImg("./images/menuImges/yBt.png", settingGGame::menuSetting.menuImg::yellowSwitch);
 	menu.loadImg("./images/menuImges/menuOpenBtn.png", settingGGame::menuSetting.menuImg::menuOpenBtn);
 	menu.loadImg("./images/menuImges/hearts.png", settingGGame::menuSetting.menuImg::hearts);
+	menu.loadImg("./images/menuImges/menuBtns.png", settingGGame::menuSetting.menuImg::menuFirstLvlBtns);
+	menu.loadImg("./images/menuImges/settingBtns.png", settingGGame::menuSetting.menuImg::menuSettingsBtns);
 	menu.blitMenuHeaderFunctional();
 	
 
@@ -52,6 +54,7 @@ int main(int argc, char* argv[]) {
 	direction_ direct;
 	bool game = true;
 	bool firstStep = false;
+	bool gameResult = false;
 	
 	int cursor_X = 0, cursor_Y = 0;
 
@@ -60,8 +63,16 @@ int main(int argc, char* argv[]) {
 
 		while (SDL_PollEvent(&event) || game)
 		{
-			menu.gTimer();
-			menu.blitGTime();
+			if (!gameResult)
+			{
+				menu.gTimer();
+				menu.blitGTime();
+			}
+			else
+			{
+				/// TODO: reset timer
+			}
+			
 
 			if (event.button.button == SDL_BUTTON_LEFT && event.type == SDL_MOUSEBUTTONUP)
 			{
@@ -75,7 +86,34 @@ int main(int argc, char* argv[]) {
 
 				if (menu.getMenuFlag())
 				{
+					switch (menu.btnParse(cursor_X, cursor_Y, menu.getMenuBtnCoords()))
+					{
+					case settingGGame::menuSetting.menuPuncts::settingsBtn:
+						menu.blitWinSettings(false);
+						//menu.blitSettings();
+						std::cout << "blitSettings\n";
 
+						SDL_UpdateWindowSurface(settingGGame::win);
+						
+						break;
+					case settingGGame::menuSetting.menuPuncts::about:
+						//menu.blitAbout();
+						std::cout << "blitAbout\n";
+						break;
+					case settingGGame::menuSetting.menuPuncts::quitBtn:
+						//quit
+						std::cout << "quit\n";
+
+						break;
+					case settingGGame::menuSetting.menuPuncts::cancelBtn:
+						//closeMenu
+						std::cout << "closeMenu\n";
+
+						break;
+
+					default:
+						break;
+					}
 				}
 			}
 
@@ -87,7 +125,9 @@ int main(int argc, char* argv[]) {
 			}
 			if (characterTest.getHP())
 			{
-				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN)
+				/// TODO: create common function for btn press
+
+				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN && !menu.getMenuFlag())
 				{
 					fTest.setOpenCell(characterTest.getCharacterPosition());
 					if (!characterTest.transmit({ false, true, false, false }, fTest.getFiledVector()))
@@ -96,8 +136,7 @@ int main(int argc, char* argv[]) {
 						{
 							std::cout << "fStep\n";
 
-							menu.increaseStepCount();
-							menu.blitStepCounter();
+
 							menu.setGTime();
 							firstStep = true;
 						}
@@ -105,9 +144,10 @@ int main(int argc, char* argv[]) {
 
 						fTest.blitField();
 						characterTest.blitCharacter(fTest.getFiledVector());
+						menu.blitStepCounter();
 						SDL_UpdateWindowSurface(settingGGame::win);
 
-						menu.blitStepCounter();
+
 
 						if (characterTest.checkBobm(fTest.getFiledVector()))
 						{
@@ -117,17 +157,25 @@ int main(int argc, char* argv[]) {
 							if (characterTest.decreaseHP()) {
 
 							}
-							else std::cout << "you are Loser\n";
+							else
+							{
+								std::cout << "you are Loser\n";
+								/// TODO: saving if it's necessary for this work(???)
+
+								gameResult = true;
+							}
 							menu.blitHP(characterTest.getHP());
 							SDL_UpdateWindowSurface(settingGGame::win);
 						}
 						if (characterTest.checkWin(fTest.getFiledVector()))
 						{
 							std::cout << "WIN WIN WIN WIN WIN\n";
+							/// TODO: saving if it's necessary for this work(???)
+
 						}
 					}
 				}
-				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RIGHT)
+				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RIGHT && !menu.getMenuFlag())
 				{
 					
 					fTest.setOpenCell(characterTest.getCharacterPosition());
@@ -137,8 +185,9 @@ int main(int argc, char* argv[]) {
 						{
 							std::cout << "fStep\n";
 
-							menu.increaseStepCount();
-							menu.blitStepCounter();
+							/*menu.increaseStepCount();
+							menu.blitStepCounter();*/
+
 							menu.setGTime();
 							firstStep = true;
 						}
@@ -146,9 +195,9 @@ int main(int argc, char* argv[]) {
 
 						fTest.blitField();
 						characterTest.blitCharacter(fTest.getFiledVector());
-						SDL_UpdateWindowSurface(settingGGame::win);
 
 						menu.blitStepCounter();
+						SDL_UpdateWindowSurface(settingGGame::win);
 
 						if (characterTest.checkBobm(fTest.getFiledVector()))
 						{
@@ -158,7 +207,11 @@ int main(int argc, char* argv[]) {
 							if (characterTest.decreaseHP()) {
 
 							}
-							else std::cout << "you are Loser\n";
+							else
+							{
+								std::cout << "you are Loser\n";
+								gameResult = true;
+							}
 							menu.blitHP(characterTest.getHP());
 							SDL_UpdateWindowSurface(settingGGame::win);
 						}
@@ -169,7 +222,7 @@ int main(int argc, char* argv[]) {
 					}
 
 				}
-				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP)
+				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP && !menu.getMenuFlag())
 				{
 					
 
@@ -180,8 +233,8 @@ int main(int argc, char* argv[]) {
 						{
 							std::cout << "fStep\n";
 
-							menu.increaseStepCount();
-							menu.blitStepCounter();
+							/*menu.increaseStepCount();
+							menu.blitStepCounter();*/
 							menu.setGTime();
 							firstStep = true;
 						}
@@ -189,9 +242,9 @@ int main(int argc, char* argv[]) {
 
 						fTest.blitField();
 						characterTest.blitCharacter(fTest.getFiledVector());
-						SDL_UpdateWindowSurface(settingGGame::win);
-
 						menu.blitStepCounter();
+
+						SDL_UpdateWindowSurface(settingGGame::win);
 
 						if (characterTest.checkBobm(fTest.getFiledVector()))
 						{
@@ -200,7 +253,11 @@ int main(int argc, char* argv[]) {
 							if (characterTest.decreaseHP()) {
 
 							}
-							else std::cout << "you are Loser\n";
+							else
+							{
+								std::cout << "you are Loser\n";
+								gameResult = true;
+							}
 							menu.blitHP(characterTest.getHP());
 							SDL_UpdateWindowSurface(settingGGame::win);
 						}
@@ -210,7 +267,7 @@ int main(int argc, char* argv[]) {
 						}
 					}
 				}
-				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_LEFT)
+				if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_LEFT && !menu.getMenuFlag())
 				{
 					
 					fTest.setOpenCell(characterTest.getCharacterPosition());
@@ -221,8 +278,8 @@ int main(int argc, char* argv[]) {
 						{
 							std::cout << "fStep\n";
 
-							menu.increaseStepCount();
-							menu.blitStepCounter();
+							/*menu.increaseStepCount();
+							menu.blitStepCounter();*/
 							menu.setGTime();
 							firstStep = true;
 						}
@@ -231,9 +288,9 @@ int main(int argc, char* argv[]) {
 
 						fTest.blitField();
 						characterTest.blitCharacter(fTest.getFiledVector());
-						SDL_UpdateWindowSurface(settingGGame::win);
-
 						menu.blitStepCounter();
+
+						SDL_UpdateWindowSurface(settingGGame::win);
 
 						if (characterTest.checkBobm(fTest.getFiledVector()))
 						{
@@ -243,7 +300,11 @@ int main(int argc, char* argv[]) {
 							if (characterTest.decreaseHP()) {
 
 							}
-							else std::cout << "you are Loser\n";
+							else
+							{
+								std::cout << "you are Loser\n";
+								gameResult = true;
+							}
 							menu.blitHP(characterTest.getHP());
 							SDL_UpdateWindowSurface(settingGGame::win);
 						}
@@ -254,10 +315,7 @@ int main(int argc, char* argv[]) {
 					}
 				}
 			}
-			
-		
-					
-			
+
 			SDL_Delay(1000 / 60);
 		}
 	}

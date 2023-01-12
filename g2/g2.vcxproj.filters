@@ -94,10 +94,13 @@
     <Image Include="images\menuImges\rBt.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="images\menuImges\settBt.png">
+    <Image Include="images\menuImges\yBt.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="images\menuImges\yBt.png">
+    <Image Include="images\menuImges\menuBtns.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="images\menuImges\settingBtns.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>
