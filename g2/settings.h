@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 #include<iostream>
 #include<vector>
@@ -7,12 +7,12 @@
 
 enum gameImages
 {
-	cell, 
+	cell,
 	openCell,
 	cellBombTip,
 	cellStrengeTip,
 	cellEmptyTip,
-	
+
 
 	gameImgTOTAL
 };
@@ -32,7 +32,7 @@ struct hardnesSettings
 	int tipBombParametr = 8;
 	int tipStrangeParametr = 8;
 	int tipEmptyParametr = 8;
-} ;
+};
 
 struct gameSizes
 {
@@ -43,9 +43,9 @@ struct gameSizes
 	int menuHeaderHeight = 100;
 
 	int winWIDTH = fieldWIDTH * cellSize;	//px
-	int winHEIGHT = fieldHEIGHT *cellSize + menuHeaderHeight;	//px
-	
-} ;
+	int winHEIGHT = fieldHEIGHT * cellSize + menuHeaderHeight;	//px
+
+};
 
 struct cellValue
 {
@@ -53,11 +53,11 @@ struct cellValue
 	int y = 0;
 	int i = 0;
 	int j = 0;
-	bool bomb = false;		// бомба
-	bool open = false;		//открыто 
-	bool tipStrange = false;		//подсказка
-	bool tipWithBomb = false;	//100% Бомба
-	bool tipEmptyCell = false;	//100% ничего нет
+	bool bomb = false;		// ГЎГ®Г¬ГЎГ 
+	bool open = false;		//Г®ГІГЄГ°Г»ГІГ® 
+	bool tipStrange = false;		//ГЇГ®Г¤Г±ГЄГ Г§ГЄГ 
+	bool tipWithBomb = false;	//100% ГЃГ®Г¬ГЎГ 
+	bool tipEmptyCell = false;	//100% Г­ГЁГ·ГҐГЈГ® Г­ГҐГІ
 	bool hadSmth = false;
 };
 
@@ -80,7 +80,7 @@ struct direction_
 
 struct Coords
 {
-	unsigned i =0;
+	unsigned i = 0;
 	unsigned j = 0;
 };
 
@@ -108,7 +108,7 @@ enum hardnesSettingsEnum
 struct menuSettings
 {
 	int menuPaddingTop = 30;
-	SDL_Rect menuOpenBtnCoords = {30, menuPaddingTop, 40, 40 };
+	SDL_Rect menuOpenBtnCoords = { 30, menuPaddingTop, 40, 40 };
 	int cropHeightImgBtn = 150;
 	int heightImgBtn = 95;
 	int widthImgBtns = 300;
