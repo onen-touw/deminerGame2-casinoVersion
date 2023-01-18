@@ -4,7 +4,7 @@
 
 
 class fieldClass :
-    public imagesClass/*, public baseGameClass*/
+    public imagesClass
 {
 protected:
 
@@ -118,7 +118,6 @@ public:
             }
         }
 
-        ///TODO::подсказка 100% бомба 
         for (int i = 0; i < this->tipBombCount; i++)
         {
             int x = rand() % h;
