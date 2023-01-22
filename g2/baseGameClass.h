@@ -40,6 +40,12 @@ public:
 		}
 		settingGGame::Surface = SDL_GetWindowSurface(settingGGame::win);
 
+		if (TTF_Init() != 0)
+		{
+			std::cout << "problem::ttfInit\n";
+			success = false;
+		}
+
 		return success;
 	}
 

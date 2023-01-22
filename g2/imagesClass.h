@@ -31,6 +31,15 @@ public:
 		return;
 	}
 
+	SDL_Surface* loadOneImg(std::string path) {
+		SDL_Surface* flower = IMG_Load(path.c_str());
+		if (flower == nullptr) {
+			std::cout << "Can't load: " << IMG_GetError() << std::endl;
+			return nullptr;
+		}
+		return flower;
+	}
+
 	~imagesClass()
 	{
 		images.clear();

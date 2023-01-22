@@ -6,6 +6,8 @@ namespace settingGGame {
 	gameSizes gSizes;
 	hardnesSettings hardSetting;
 	CharacterValues charctData;
+	headerSettings headerSetting;
 	menuSettings menuSetting;
+
 	int hardnes = hardnesSettingsEnum::easy;
 }

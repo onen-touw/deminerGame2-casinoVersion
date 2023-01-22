@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\VC_addons\SDL2-2.24.0\include;C:\VC_addons\SDL2_image-2.6.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VC_addons\SDL2-2.24.0\lib\x64;C:\VC_addons\SDL2_image-2.6.2\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\VC_addons\SDL2-2.24.0\include;C:\VC_addons\SDL2_image-2.6.2\include;C:\VC_addons\SDL2_ttf-2.20.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\VC_addons\SDL2-2.24.0\lib\x64;C:\VC_addons\SDL2_image-2.6.2\lib\x64;C:\VC_addons\SDL2_ttf-2.20.1\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,7 +112,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,23 +132,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="aboutWinClass.cpp" />
     <ClCompile Include="baseGameClass.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="fieldClass.cpp" />
+    <ClCompile Include="fontClass.cpp" />
     <ClCompile Include="gameplayClass.cpp" />
     <ClCompile Include="imagesClass.cpp" />
+    <ClCompile Include="interfaceObjects.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="headerClass.cpp" />
     <ClCompile Include="menuClass.cpp" />
     <ClCompile Include="settings.cpp" />
+    <ClCompile Include="settingWinClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aboutWinClass.h" />
     <ClInclude Include="baseGameClass.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="fieldClass.h" />
+    <ClInclude Include="fontClass.h" />
     <ClInclude Include="gameplayClass.h" />
     <ClInclude Include="imagesClass.h" />
+    <ClInclude Include="headerClass.h" />
+    <ClInclude Include="interfaceObjects.h" />
     <ClInclude Include="menuClass.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="settingWinClass.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="images\gameImages\bombTip.png" />
@@ -166,6 +176,9 @@
     <Image Include="images\menuImges\rBt.png" />
     <Image Include="images\menuImges\settingBtns.png" />
     <Image Include="images\menuImges\yBt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="font\courier.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

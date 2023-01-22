@@ -4,6 +4,41 @@
 #include<vector>
 #include<SDL.h>
 #include<SDL_image.h>
+#include<SDL_ttf.h>
+
+
+///==========
+struct btnsStruct
+{
+	std::string btnText = "";
+	SDL_Rect rect = { 0,0,0,0 };
+};
+struct menuSettings
+{
+	short btnH = 45, btnW = 150;
+	short pading20 = 20; 
+	enum menuState
+	{
+		close,
+		mainMenuWindow,
+		load,
+		setting,
+		about
+	};
+};
+//struct winSettings
+//{
+//	const short header = 70;
+//	const short winH = 600;
+//	const short winW = 600;
+//	const short winTopBorder = 31;
+//
+//	SDL_Window* win = nullptr;
+//	SDL_Surface* surface = nullptr;
+//};
+///==========
+
+
 
 enum gameImages
 {
@@ -94,8 +129,6 @@ struct CharacterValues
 		imgCount
 	};
 	unsigned healthPoint = 2;
-	//direction_ direction;
-	///bonuses
 };
 
 enum hardnesSettingsEnum
@@ -105,56 +138,19 @@ enum hardnesSettingsEnum
 	hard
 };
 
-struct menuSettings
+struct headerSettings
 {
 	int menuPaddingTop = 30;
 	SDL_Rect menuOpenBtnCoords = { 30, menuPaddingTop, 40, 40 };
-	int cropHeightImgBtn = 150;
-	int heightImgBtn = 95;
-	int widthImgBtns = 300;
-	const int menu2LvlPunctsCount = 2; ///about, settings
-	enum menuImg
+
+	enum headerImg
 	{
+		headerAndBG,
 		hearts,
 		numbers,
-		headerAndBG,
 		menuOpenBtn,
-		menuFirstLvlBtns,
-		menuSettingsBtns,
-		redSwitch,
-		yellowSwitch,
-		rootBtn,
 
 		imgMenuTOTAL
-	};
-	enum menu2lvlPuncts
-	{
-		goTo1lvl,
-		settingsP,
-		aboutP
-	};
-	enum rootBtn
-	{
-		accept,
-		cancel,
-		rootTOTAL
-	};
-	enum menuPuncts
-	{
-		settingsBtn,
-		about,
-		quitBtn,
-		cancelBtn,
-
-		menuPunctsTOTAL
-	};
-	enum menuSettingPuncts
-	{
-		easySetting = 0,
-		normalSetting,
-		hardSetting,
-
-		menuSettingPunctsTOTAL
 	};
 };
 
@@ -164,6 +160,7 @@ namespace settingGGame {
 	extern gameSizes gSizes;
 	extern hardnesSettings hardSetting;
 	extern CharacterValues charctData;
+	extern headerSettings headerSetting;
 	extern menuSettings menuSetting;
 	extern int hardnes;
 	//extern std::string path
