@@ -12,7 +12,7 @@ enum gameImages
 	cellBombTip,
 	cellStrengeTip,
 	cellEmptyTip,
-
+	finish,
 
 	gameImgTOTAL
 };

@@ -17,7 +17,7 @@ private:
 	bool game = true;
 	bool firstStep = false;
 	bool gameResult = false;
-
+	 
 
 	int cursor_X = 0, cursor_Y = 0;
 
@@ -30,6 +30,7 @@ public:
 		fTest.loadImg("./images/gameImages/openCell.png", gameImages::openCell);
 		fTest.loadImg("./images/gameImages/strangeTip.png", gameImages::cellStrengeTip);
 		fTest.loadImg("./images/gameImages/bombTip.png", gameImages::cellBombTip);
+		fTest.loadImg("./images/gameImages/finish.png", gameImages::finish);
 
 		menu.setImgVectSize(settingGGame::menuSetting.menuImg::imgMenuTOTAL);
 		menu.loadImg("./images/menuImges/pinkMenuBG.png", settingGGame::menuSetting.menuImg::headerAndBG);

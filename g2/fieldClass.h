@@ -239,6 +239,8 @@ public:
                 }
             }
         }
+        this->blit(this->heightF-1, this->widthF-1, gameImages::finish);
+
     }
 
 
