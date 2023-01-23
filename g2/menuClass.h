@@ -16,7 +16,7 @@ private:
 	short positionStartX = settingGGame::gSizes.winWIDTH / 2 - settingGGame::menuSetting.btnW / 2;
 	short positionStartY = 50;
 	std::vector< btnsStruct>btnsV = {
-		{"Õ¿—“–Œ… »", {positionStartX,settingGGame::gSizes.menuHeaderHeight+ positionStartY, settingGGame::menuSetting.btnW, settingGGame::menuSetting.btnH}},
+		{"ÕŒ¬¿ﬂ »√–¿", {positionStartX,settingGGame::gSizes.menuHeaderHeight+ positionStartY, settingGGame::menuSetting.btnW, settingGGame::menuSetting.btnH}},
 		{"Œ¡ »√–≈", {positionStartX,settingGGame::gSizes.menuHeaderHeight+ positionStartY*2, settingGGame::menuSetting.btnW, settingGGame::menuSetting.btnH}},
 		{"—“¿“»—“» ¿", {positionStartX,settingGGame::gSizes.menuHeaderHeight+ positionStartY * 3, settingGGame::menuSetting.btnW, settingGGame::menuSetting.btnH}},
 		{"Œ“Ã≈Õ¿", {positionStartX, settingGGame::gSizes.menuHeaderHeight+positionStartY * 4, settingGGame::menuSetting.btnW, settingGGame::menuSetting.btnH}},

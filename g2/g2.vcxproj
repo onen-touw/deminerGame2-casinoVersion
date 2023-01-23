@@ -143,8 +143,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="headerClass.cpp" />
     <ClCompile Include="menuClass.cpp" />
+    <ClCompile Include="saveClass.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="settingWinClass.cpp" />
+    <ClCompile Include="statisticWinClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aboutWinClass.h" />
@@ -157,8 +159,10 @@
     <ClInclude Include="headerClass.h" />
     <ClInclude Include="interfaceObjects.h" />
     <ClInclude Include="menuClass.h" />
+    <ClInclude Include="saveClass.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="settingWinClass.h" />
+    <ClInclude Include="statisticWinClass.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="images\gameImages\bombTip.png" />
