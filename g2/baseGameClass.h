@@ -49,7 +49,7 @@ public:
 		return success;
 	}
 
-	void rebuildWin() {
+	void rebuildWin() {//+
 
 		SDL_FreeSurface(settingGGame::Surface);
 		SDL_DestroyWindow(settingGGame::win);

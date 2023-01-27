@@ -30,7 +30,7 @@ public:
 
     std::vector<std::vector<cellValue>> getFiledVector() { return this->fieldV; }
 
-    void generateFieldMatrix() {
+    void generateFieldMatrix() {//+
         fieldV.resize(this->heightF);
         for (int k = 0; k < this->heightF; k++)
         {
@@ -47,8 +47,8 @@ public:
                 fieldV[i][j].y = y;
                 x += settingGGame::gSizes.cellSize;
 
-                fieldV[i][j].i = i;
-                fieldV[i][j].j = j;
+              /*  fieldV[i][j].i = i;
+                fieldV[i][j].j = j;*/
 
             }
             y += settingGGame::gSizes.cellSize;
