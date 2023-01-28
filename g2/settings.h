@@ -28,16 +28,6 @@ struct menuSettings
 		statistic
 	};
 };
-//struct winSettings
-//{
-//	const short header = 70;
-//	const short winH = 600;
-//	const short winW = 600;
-//	const short winTopBorder = 31;
-//
-//	SDL_Window* win = nullptr;
-//	SDL_Surface* surface = nullptr;
-//};
 ///==========
 
 

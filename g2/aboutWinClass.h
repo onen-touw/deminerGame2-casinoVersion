@@ -15,7 +15,9 @@ private:
 		settingGGame::gSizes.winWIDTH - 2* settingGGame::menuSetting.pading20,
 		settingGGame::gSizes.winHEIGHT - settingGGame::gSizes.menuHeaderHeight -2* settingGGame::menuSetting.pading20 };
 
-	std::string text = "texttexttexttexttext texttexttexttexttext texttexttexttexttext texttexttexttexttext texttexttexttexttext texttexttexttexttext ";
+	std::string text = "НЕКЛАССИЧЕСКИЙ САПЕР\n\n"
+		"Разработал студен БГТУ \" Военмех\" Курочкин А.С.  - А811С\n\n"
+		"Цель создания работы - курсовая работа студента\n";
 
 public:
 	aboutWinClass(SDL_Surface* bgImg, SDL_Surface* btnImg, TTF_Font* font) :
@@ -25,7 +27,8 @@ public:
 	}
 	~aboutWinClass()
 	{
-
+		text.clear();
+		btnsV.clear();
 	}
 	void blit() {
 		this->blitWithTxt(this->text.c_str());

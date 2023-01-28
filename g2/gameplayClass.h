@@ -16,6 +16,12 @@
 class gameplayClass
 {
 private:
+
+	enum gameStateEnum
+	{
+		process,win, lose
+	};
+
 	baseGameClass bcTest;
 	fieldClass fTest;
 	headerClass header;
@@ -26,6 +32,8 @@ private:
 	bool firstStep = false;
 	bool gameResult = false;
 	int menuFlag = settingGGame::menuSetting.close;
+
+	int gameState = gameStateEnum::process;
 
 	int cursor_X = 0, cursor_Y = 0;
 
@@ -53,10 +61,15 @@ public:
 
 	~gameplayClass()
 	{
+		SDL_FreeSurface(settingGGame::Surface);//+
+		SDL_DestroyWindow(settingGGame::win);
 
+		TTF_Quit();
+		IMG_Quit();
+		SDL_Quit();
 	}
 
-	void generateGame() {
+	void generateGame() {//+
 		bcTest.rebuildWin();
 		fTest.clearField();
 		fTest.setGameSettings();
@@ -75,7 +88,7 @@ public:
 
 		SDL_UpdateWindowSurface(settingGGame::win);
 
-
+		this->gameState = this->gameStateEnum::process;
 		this->firstStep = false;
 		this->gameResult = false;
 	}
@@ -100,21 +113,19 @@ public:
 			std::cout << "bomb\n";
 			fTest.demineBomb(characterTest.getCharacterPosition());
 
-			if (characterTest.decreaseHP()) {
-
-			}
-			else
+			if (!characterTest.decreaseHP()) 
 			{
-				std::cout << "you are Loser\n";
+				this->gameState = this->gameStateEnum::lose;
 				gameResult = true;
 			}
+			
 			header.blitHP(characterTest.getHP());
 			SDL_UpdateWindowSurface(settingGGame::win);
 		}
 		if (characterTest.checkWin(fTest.getFiledVector()))
 		{
-			std::cout << "WIN WIN WIN WIN WIN\n";
 
+			this->gameState = this->gameStateEnum::win;
 
 			save.openResult();
 			save.saveResult(settingGGame::hardnes, header.getTime(), header.getSteps());
@@ -123,9 +134,12 @@ public:
 		}
 	}
 
-	int startGame() {
 
-
+	/// the main cycle of the game is implemented here and
+	/// initialization interface classes: 
+	/// menuWin, aboutWin, settingWin, 
+	/// statisticWin, resultWin
+	int mainLoopAndInterfInit() {
 		fontClass font;
 		imagesClass img;
 		SDL_Event event;
@@ -136,277 +150,192 @@ public:
 			img.loadOneImg("./images/menuImges/btnBg.png"), img.loadOneImg("./images/menuImges/switch.png"), font.getFont());
 		statisticWinClass statisticWin = statisticWinClass(img.loadOneImg("./images/menuImges/mainBg.png"), img.loadOneImg("./images/menuImges/btnBg.png"), font.getFont());
 
+		interfaceObjects resultWin = interfaceObjects(img.loadOneImg("./images/menuImges/mainBg.png"), font.getFont(), { 200,200,200,200 });
+
 		generateGame();
 
-			while (SDL_PollEvent(&event) || game)
+		while (SDL_PollEvent(&event) || game)
+		{
+			if (!gameResult)
 			{
-				if (!gameResult)
+				header.gTimer();
+				header.blitGTime();
+			}
+			else
+			{
+				if (this->menuFlag == settingGGame::menuSetting.close)
 				{
-					header.gTimer();
-					header.blitGTime();
+					if (this->gameState == this->gameStateEnum::win)
+					{
+						resultWin.blitWithTextCenter("WIN WIN");
+						SDL_UpdateWindowSurface(settingGGame::win);
+					}
+					else if (this->gameState == this->gameStateEnum::lose)
+					{
+						resultWin.blitWithTextCenter("LOSE LOSE");
+						SDL_UpdateWindowSurface(settingGGame::win);
+					}
+				}
+					
+			}
+
+			if (event.button.button == SDL_BUTTON_LEFT && event.type == SDL_MOUSEBUTTONUP)
+			{
+				SDL_GetMouseState(&cursor_X, &cursor_Y);
+
+				if (header.checkOpenBtn(cursor_X, cursor_Y) && this->menuFlag == settingGGame::menuSetting.close)
+				{
+					std::cout << "menuOPen\n";
+					this->menuFlag = settingGGame::menuSetting.mainMenuWindow;
+					menu.blit();
 				}
 
-				if (event.button.button == SDL_BUTTON_LEFT && event.type == SDL_MOUSEBUTTONUP)
+				else if (this->menuFlag == settingGGame::menuSetting.mainMenuWindow)
 				{
-					SDL_GetMouseState(&cursor_X, &cursor_Y);
-					if (header.checkOpenBtn(cursor_X, cursor_Y) && this->menuFlag == settingGGame::menuSetting.close)
+					std::cout << "mainMenuWindow\n";
+					switch (menu.checkButtonClick(this->cursor_X, this->cursor_Y)) {
+					case menu.btnsEnum::settingBtn:
+						this->menuFlag = settingGGame::menuSetting.setting;
+						settingWin.blit();
+						break;
+					case menu.btnsEnum::aboutBtn:
+						std::cout << "aboutBtn\n";
+						this->menuFlag = settingGGame::menuSetting.about;
+						aboutWin.blit();
+						break;
+					case menu.btnsEnum::statBtn:
+						std::cout << "statBtn\n";
+						this->menuFlag = settingGGame::menuSetting.statistic;
+						save.openResult();
+						statisticWin.loadStatistic(save.getStat());
+						statisticWin.blit();
+						break;
+					case menu.btnsEnum::cancelGame:
+						std::cout << "cancelGame\n";
+						this->menuFlag = settingGGame::menuSetting.close;
+						fTest.blitField();
+						characterTest.blitCharacter(fTest.getFiledVector());
+						header.blitStepCounter();
+						SDL_UpdateWindowSurface(settingGGame::win);
+						break;
+					case menu.btnsEnum::quitBtn:
+						return 0;
+						break;
+
+					default:
+						break;
+					}
+				}
+
+				else if (this->menuFlag == settingGGame::menuSetting.about)
+				{
+					if (aboutWin.checkButtonClick(this->cursor_X, this->cursor_Y) == aboutWin.cancelBtn)
 					{
-						std::cout << "menuOPen\n";
+						std::cout << "aboutWin::buttons::cancel\n";
 						this->menuFlag = settingGGame::menuSetting.mainMenuWindow;
 						menu.blit();
 					}
-					else if (this->menuFlag == settingGGame::menuSetting.mainMenuWindow)
+				}
+
+				else if (this->menuFlag == settingGGame::menuSetting.setting)
+				{
+					switch (settingWin.checkButtonClick(this->cursor_X, this->cursor_Y))
 					{
-						switch (menu.checkButtonClick(this->cursor_X, this->cursor_Y)) {
-						case menu.btnsEnum::settingBtn:
-							this->menuFlag = settingGGame::menuSetting.setting;
-							settingWin.blit();
-							break;
-						case menu.btnsEnum::aboutBtn:
-							this->menuFlag = settingGGame::menuSetting.about;
-							aboutWin.blit();
-							break;
-						case menu.btnsEnum::statBtn:
-							this->menuFlag = settingGGame::menuSetting.statistic;
-							save.openResult();
-							statisticWin.loadStatistic(save.getStat());
-							statisticWin.blit();
-							break;
-						case menu.btnsEnum::cancelGame:
-							this->menuFlag = settingGGame::menuSetting.close;
-							fTest.blitField();
-							characterTest.blitCharacter(fTest.getFiledVector());
-							header.blitStepCounter();
-							SDL_UpdateWindowSurface(settingGGame::win);
-							break;
-						case menu.btnsEnum::quitBtn:
-							return 0;
-							break;
+					case settingWin.btnsEnum::easy:
+						std::cout << "setting::buttons::easy\n";
+						settingWin.changeHardness(settingWin.btnsEnum::easy);
+						break;
+					case settingWin.btnsEnum::normal:
+						std::cout << "setting::buttons::normal\n";
+						settingWin.changeHardness(settingWin.btnsEnum::normal);
+						break;
+					case settingWin.btnsEnum::hard:
+						std::cout << "setting::buttons::hard\n";
+						settingWin.changeHardness(settingWin.btnsEnum::hard);
+						break;
+					case settingWin.btnsEnum::apply:
+						std::cout << "setting::buttons::apply\n";
+						this->menuFlag = settingGGame::menuSetting.close;
+						settingWin.applyHardness();
+						this->generateGame();
+						break;
+					case settingWin.btnsEnum::cancel:
+						std::cout << "setting::buttons::cancel\n";
+						settingWin.resetHardness();
+						this->menuFlag = settingGGame::menuSetting.mainMenuWindow;
+						menu.blit();
 
-						default:
-							break;
-						}
-					}
-					else if (this->menuFlag == settingGGame::menuSetting.about)
-					{
-						if (aboutWin.checkButtonClick(this->cursor_X, this->cursor_Y) == aboutWin.cancelBtn)
-						{
-							std::cout << "aboutWin::buttons::cancel\n";
-							this->menuFlag = settingGGame::menuSetting.mainMenuWindow;
-							menu.blit();
-						}
-					}
-					else if (this->menuFlag == settingGGame::menuSetting.setting)
-					{
-						switch (settingWin.checkButtonClick(this->cursor_X, this->cursor_Y))
-						{
-						case settingWin.btnsEnum::easy:
-							std::cout << "setting::buttons::easy\n";
-							settingWin.changeHardness(settingWin.btnsEnum::easy);
-							break;
-						case settingWin.btnsEnum::normal:
-							std::cout << "setting::buttons::normal\n";
-							settingWin.changeHardness(settingWin.btnsEnum::normal);
-							break;
-						case settingWin.btnsEnum::hard:
-							std::cout << "setting::buttons::hard\n";
-							settingWin.changeHardness(settingWin.btnsEnum::hard);
-							break;
-						case settingWin.btnsEnum::apply:
-							std::cout << "setting::buttons::apply\n";
-							this->menuFlag = settingGGame::menuSetting.close;
-							settingWin.applyHardness();
-
-							this->generateGame();
-
-							/*fTest.blitField();
-							characterTest.blitCharacter(fTest.getFiledVector());*/
-
-							//SDL_UpdateWindowSurface(settingGGame::win);
-							break;
-						case settingWin.btnsEnum::cancel:
-							std::cout << "setting::buttons::cancel\n";
-							settingWin.resetHardness();
-							this->menuFlag = settingGGame::menuSetting.mainMenuWindow;
-							menu.blit();
-
-							break;
+						break;
 
 
-						default:
-							break;
-						}
-					}
-
-					else if (this->menuFlag = settingGGame::menuSetting.statistic)
-					{
-						if (statisticWin.checkButtonClick(this->cursor_X, this->cursor_Y) == statisticWin.cancelBtn)
-						{
-							std::cout << "statisticWin::buttons::cancel\n";
-							this->menuFlag = settingGGame::menuSetting.mainMenuWindow;
-							menu.blit();
-						}
+					default:
+						break;
 					}
 				}
 
-				if (event.type == SDL_QUIT)//отслеживание закрытия окна через кнопку "Крест"
+				else if (this->menuFlag == settingGGame::menuSetting.statistic)
 				{
-					game = false;
-				}
-
-				if (characterTest.getHP() && !gameResult)
-				{
-					if (this->menuFlag == settingGGame::menuSetting.close)
+					if (statisticWin.checkButtonClick(this->cursor_X, this->cursor_Y) == statisticWin.cancelBtn)
 					{
-					if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN /*&& !menu.getMenuFlag()*/)
+						std::cout << "statisticWin::buttons::cancel\n";
+						this->menuFlag = settingGGame::menuSetting.mainMenuWindow;
+						menu.blit();
+					}
+				}
+			}
+
+			else if (event.type == SDL_QUIT)//отслеживание закрытия окна через кнопку "Крест"
+			{
+				game = false;
+			}
+
+			if (characterTest.getHP() && !gameResult)
+			{
+				if (this->menuFlag == settingGGame::menuSetting.close)
+				{
+					if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN)
 					{
 						fTest.setOpenCell(characterTest.getCharacterPosition());
 						if (!characterTest.transmit({ false, true, false, false }, fTest.getFiledVector()))
 						{
-							/*if (!firstStep)
-							{
-								std::cout << "fStep\n";
-
-
-								header.setGTime();
-								firstStep = true;
-							}
-							header.increaseStepCount();
-
-							fTest.blitField();
-							characterTest.blitCharacter(fTest.getFiledVector());
-							header.blitStepCounter();
-							SDL_UpdateWindowSurface(settingGGame::win);
-
-							if (characterTest.checkBobm(fTest.getFiledVector()))
-							{
-								std::cout << "bomb\n";
-								fTest.demineBomb(characterTest.getCharacterPosition());
-
-								if (!characterTest.decreaseHP()) {
-									std::cout << "you are Loser\n";
-									gameResult = true;
-								}
-								header.blitHP(characterTest.getHP());
-								SDL_UpdateWindowSurface(settingGGame::win);
-							}
-							if (characterTest.checkWin(fTest.getFiledVector()))
-							{
-								std::cout << "WIN WIN WIN WIN WIN\n";
-								/// TODO: saving if it's necessary for this work(???)
-								gameResult = true;
-							}*/
 							this->step();
 						}
 					}
-					else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RIGHT/* && *//*!menu.getMenuFlag()*/)
+					else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RIGHT)
 					{
 
 						fTest.setOpenCell(characterTest.getCharacterPosition());
 						if (!characterTest.transmit({ false, false, true,false }, fTest.getFiledVector()))
 						{
-							/*if (!firstStep)
-							{
-								std::cout << "fStep\n";
-								header.setGTime();
-								firstStep = true;
-							}
-							header.increaseStepCount();
-
-							fTest.blitField();
-							characterTest.blitCharacter(fTest.getFiledVector());
-
-							header.blitStepCounter();
-							SDL_UpdateWindowSurface(settingGGame::win);
-
-							if (characterTest.checkBobm(fTest.getFiledVector()))
-							{
-								std::cout << "bomb\n";
-								fTest.demineBomb(characterTest.getCharacterPosition());
-
-								if (characterTest.decreaseHP()) {
-
-								}
-								else
-								{
-									std::cout << "you are Loser\n";
-									gameResult = true;
-								}
-								header.blitHP(characterTest.getHP());
-								SDL_UpdateWindowSurface(settingGGame::win);
-							}
-							if (characterTest.checkWin(fTest.getFiledVector()))
-							{
-								std::cout << "WIN WIN WIN WIN WIN\n";
-								gameResult = true;
-
-							}*/
 							this->step();
 						}
 
 					}
-					else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP /*&& !menu.getMenuFlag()*/)
+					else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP)
 					{
 
 
 						fTest.setOpenCell(characterTest.getCharacterPosition());
 						if (!characterTest.transmit({ true,false,false,false }, fTest.getFiledVector()))
 						{
-							//if (!firstStep)
-							//{
-							//	std::cout << "fStep\n";
-
-							//	/*menu.increaseStepCount();
-							//	menu.blitStepCounter();*/
-							//	header.setGTime();
-							//	firstStep = true;
-							//}
-							//header.increaseStepCount();
-
-							//fTest.blitField();
-							//characterTest.blitCharacter(fTest.getFiledVector());
-							//header.blitStepCounter();
-
-							//SDL_UpdateWindowSurface(settingGGame::win);
-
-							//if (characterTest.checkBobm(fTest.getFiledVector()))
-							//{
-							//	std::cout << "bomb\n";
-							//	fTest.demineBomb(characterTest.getCharacterPosition());
-							//	if (characterTest.decreaseHP()) {
-
-							//	}
-							//	else
-							//	{
-							//		std::cout << "you are Loser\n";
-							//		gameResult = true;
-							//	}
-							//	header.blitHP(characterTest.getHP());
-							//	SDL_UpdateWindowSurface(settingGGame::win);
-							//}
-							//if (characterTest.checkWin(fTest.getFiledVector()))
-							//{
-							//	std::cout << "WIN WIN WIN WIN WIN\n";
-							//	gameResult = true;
-
 							this->step();
-							}
 						}
-					else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_LEFT /*&& !menu.getMenuFlag()*/)
+					}
+					else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_LEFT)
 					{
 
 						fTest.setOpenCell(characterTest.getCharacterPosition());
 
 						if (!characterTest.transmit({ false,false,false, true }, fTest.getFiledVector()))
 						{
-							
+
 							this->step();
 						}
 					}
-					}
 				}
-				SDL_Delay(1000 / 60);
 			}
+			SDL_Delay(1000 / 60);
+		}
 		return 0;
 	}
 };

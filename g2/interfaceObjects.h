@@ -34,6 +34,12 @@ public:
 		this->font = font;
 	}
 
+	interfaceObjects(SDL_Surface* bgImg,  TTF_Font* font, SDL_Rect objRect = { 0,0,0,0 }) {
+		this->bgImg = bgImg;
+		this->font = font;
+		this->objRect = objRect;
+	}
+
 	~interfaceObjects()
 	{
 		this->btns.clear();
@@ -93,6 +99,18 @@ public:
 		SDL_BlitScaled(img, NULL, settingGGame::Surface, &objRect);
 		SDL_Surface* tempSurf = TTF_RenderText_Solid(this->font, text, color);
 		SDL_Rect tempRect = { objRect.x + (objRect.w - tempSurf->w) / 2,objRect.y + (objRect.h - tempSurf->h) / 2,0,0 };
+		if (this->font == nullptr)
+		{
+			std::cout << "error\n";
+		}
+		SDL_BlitSurface(tempSurf, NULL, settingGGame::Surface, &tempRect);
+		SDL_FreeSurface(tempSurf);
+	}
+
+	void blitWithTextCenter(const char* text, SDL_Color color = { 0,0,0 }) {
+		SDL_BlitScaled(this->bgImg, NULL, settingGGame::Surface, &this->objRect);
+		SDL_Surface* tempSurf = TTF_RenderText_Solid(this->font, text, color);
+		SDL_Rect tempRect = { this->objRect.x + (this->objRect.w - tempSurf->w) / 2,this->objRect.y + (this->objRect.h - tempSurf->h) / 2,0,0 };
 		if (this->font == nullptr)
 		{
 			std::cout << "error\n";

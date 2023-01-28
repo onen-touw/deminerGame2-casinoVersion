@@ -54,7 +54,7 @@ public:
 		this->i = 0;
 		this->j = 0;
 	}
-	void blitCharacter(std::vector<std::vector<cellValue>> field) {
+	void blitCharacter(std::vector<std::vector<cellValue>> field) {//+
 		SDL_Rect mR = {field[this->i][this->j].x, field[this->i][this->j].y, settingGGame::gSizes.cellSize,settingGGame::gSizes.cellSize };
 		SDL_BlitScaled(images[settingGGame::charctData.img::character], NULL, settingGGame::Surface, &mR);
 	}
