@@ -134,9 +134,12 @@ public:
 		}
 	}
 
-	int mainLoop() {
 
-
+	/// the main cycle of the game is implemented here and
+	/// initialization interface classes: 
+	/// menuWin, aboutWin, settingWin, 
+	/// statisticWin, resultWin
+	int mainLoopAndInterfInit() {
 		fontClass font;
 		imagesClass img;
 		SDL_Event event;

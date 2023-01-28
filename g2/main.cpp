@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
 
 	gameplayClass game;
 
-	game.mainLoop();
+	game.mainLoopAndInterfInit();
 
 	
 
